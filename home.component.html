@@ -1,0 +1,33 @@
+<main class="container">
+  ...
+  
+  <div class="input-group mb-2 mt-5">
+    <!-- angular material tree view -->
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="nodeStyle">
+      <!-- this is tree note template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onTemplateChange(node)">
+        <!-- yse disable button to provide padding for tree leaf -->
+        <button mat-icon-button style="background-color:transparent;">
+          
+        </button>
+        <div class= "childTreeName" [innerHtml]="node.name | highlightSearch: this.searchKeyword" 
+             [ngClass]="{'background-highlight':'node.path === this.selectedTemplate}"> {{node.name}}
+        </div>        
+      </mat-tree-node>
+      <!-- this is the tree node template for expandable nodes -->
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="onTemplateChange(node)">
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" style="background: transpparent;">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_mode' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        <div [innerHtml]="node.name | HighlightSearch: this.searchKeyword" 
+             [ngClass]="{'background-highlight': node.path === this.selectedTemplate}"> {{node.name}}</div>
+      </mat-tree-node>
+    </mat-tree>
+    <!-- end of angular material tree view -->
+    
+  </div>
+  
+  ...
+</main>
